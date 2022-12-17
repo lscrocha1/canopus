@@ -5,7 +5,7 @@ namespace Canopus.API.Infrastructure.Exceptions;
 [ExcludeFromCodeCoverage]
 public class UnprocessableEntityException : CanopusException
 {
-    public UnprocessableEntityException(string message, int code = StatusCodes.Status422UnprocessableEntity) : base(code, message)
+    public UnprocessableEntityException(string message) : base(StatusCodes.Status422UnprocessableEntity, message)
     {
         
     }

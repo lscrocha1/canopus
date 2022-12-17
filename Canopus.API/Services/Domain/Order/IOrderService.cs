@@ -6,5 +6,5 @@ public interface IOrderService
 {
     Task<CustomerOrderDto> GetByCustomerId(Guid customerId, CancellationToken token);
 
-    Task Add(decimal price, CancellationToken token);
+    Task Add(Guid customerId, decimal price, CancellationToken token);
 }

@@ -10,5 +10,5 @@ public abstract class CanopusException : Exception
         Code = code;
     }
 
-    public int Code { get; } = StatusCodes.Status500InternalServerError;
+    public int Code { get; }
 }

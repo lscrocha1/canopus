@@ -6,7 +6,7 @@ namespace Canopus.API.Infrastructure.Exceptions;
 [ExcludeFromCodeCoverage]
 public class BadRequestException : CanopusException
 {
-    public BadRequestException(string message = ExceptionConstant.UnhandledException, int code = StatusCodes.Status400BadRequest) : base(code, message)
+    public BadRequestException(string message) : base(StatusCodes.Status400BadRequest, message)
     {
     }
 }

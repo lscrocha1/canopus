@@ -5,7 +5,7 @@ namespace Canopus.API.Infrastructure.Exceptions;
 [ExcludeFromCodeCoverage]
 public class NotFoundException : CanopusException
 {
-    public NotFoundException(string message, int code = StatusCodes.Status404NotFound) : base(code, message)
+    public NotFoundException(string message) : base(StatusCodes.Status404NotFound, message)
     {
         
     }

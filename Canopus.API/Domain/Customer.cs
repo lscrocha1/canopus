@@ -11,5 +11,5 @@ public class Customer
 
     public string Email { get; set; } = string.Empty;
 
-    public IList<Order> Orders { get; set; } = ArraySegment<Order>.Empty;
+    public List<Order> Orders { get; set; } = null!;
 }

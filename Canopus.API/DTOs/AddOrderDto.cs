@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Canopus.API.DTOs;
@@ -10,5 +11,7 @@ public class AddOrderDto
         Price = price;
     }
 
+    [MinLength(1)]
+    [Required]
     public decimal Price { get; }
 }
