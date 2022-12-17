@@ -1,4 +1,6 @@
-using Canopus.API.Services.Domain.Customer;
+using Canopus.API.DTOs;
+using Canopus.API.Responses;
+using Canopus.API.Services.Application.Customer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Canopus.API.Controllers;
@@ -18,7 +20,7 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Get(
+    public async Task<ActionResult<MultipleResponse<CustomerDto>>> Get(
         [FromQuery] int pageIndex = 1, 
         [FromQuery] int pageSize = 20,
         [FromQuery] string search = "")
@@ -27,8 +29,8 @@ public class CustomerController : ControllerBase
             pageIndex, 
             pageSize, 
             search);
-
-        if (!result.Any())
+        
+        if (!result.Items.Any())
             return NoContent();
         
         return Ok(result);

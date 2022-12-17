@@ -49,7 +49,7 @@ services.AddSwaggerGen(opts =>
 
 var app = builder.Build();
 
-// app.UseSwagger();
+app.UseSwagger();
 
 app.UseSwaggerUI(opts =>
 {
