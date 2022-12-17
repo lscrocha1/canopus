@@ -16,12 +16,12 @@ public class CustomerControllerTests
         var customerServiceMock = new Mock<ICustomerService>();
 
         customerServiceMock
-            .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+            .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<string>()))
             .ReturnsAsync(new MultipleResponse<CustomerDto>(0, 0, 0, Array.Empty<CustomerDto>()));
 
         var controller = new CustomerController(customerServiceMock.Object);
 
-        var result = await controller.Get();
+        var result = await controller.Get(Helpers.GetCancellationToken());
 
         Assert.IsType<NoContentResult>(result.Result);
     }
@@ -32,7 +32,7 @@ public class CustomerControllerTests
         var customerServiceMock = new Mock<ICustomerService>();
 
         customerServiceMock
-            .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+            .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<string>()))
             .ReturnsAsync(
                 new MultipleResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>
                 {
@@ -41,7 +41,7 @@ public class CustomerControllerTests
 
         var controller = new CustomerController(customerServiceMock.Object);
 
-        var result = await controller.Get();
+        var result = await controller.Get(Helpers.GetCancellationToken());
 
         Assert.IsType<OkObjectResult>(result.Result);
     }
@@ -52,12 +52,15 @@ public class CustomerControllerTests
         var customerServiceMock = new Mock<ICustomerService>();
 
         customerServiceMock
-            .Setup(e => e.AddCustomer(new AddCustomerDto(string.Empty, string.Empty)))
+            .Setup(e => e.AddCustomer(new AddCustomerDto(string.Empty, string.Empty), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new CustomerDto(Guid.Empty, string.Empty, string.Empty));
 
         var controller = new CustomerController(customerServiceMock.Object);
 
-        var result = await controller.Add(new AddCustomerDto(string.Empty, string.Empty));
+        var dto = new AddCustomerDto(string.Empty, string.Empty);
+        var token = Helpers.GetCancellationToken();
+
+        var result = await controller.Add(dto, token);
 
         result.Should().NotBeNull();
         (result.Result as ObjectResult)!.StatusCode.Should().Be(201);

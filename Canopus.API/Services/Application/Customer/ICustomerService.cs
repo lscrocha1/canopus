@@ -5,7 +5,11 @@ namespace Canopus.API.Services.Application.Customer;
 
 public interface ICustomerService
 {
-    Task<MultipleResponse<CustomerDto>> Get(int pageIndex, int pageSize, string search = "");
+    Task<MultipleResponse<CustomerDto>> Get(
+        int pageIndex, 
+        int pageSize, 
+        CancellationToken token,
+        string search = "");
 
-    Task<CustomerDto> AddCustomer(AddCustomerDto dto);
+    Task<CustomerDto> AddCustomer(AddCustomerDto dto, CancellationToken token);
 }

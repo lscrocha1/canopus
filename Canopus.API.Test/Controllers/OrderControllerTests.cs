@@ -16,12 +16,12 @@ public class OrderControllerTests
         var orderServiceMock = new Mock<IOrderService>();
 
         orderServiceMock
-            .Setup(e => e.GetCustomerOrders(It.IsAny<Guid>()))
+            .Setup(e => e.GetCustomerOrders(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new SingleResponse<CustomerOrderDto>(null));
 
         var controller = new OrderController(orderServiceMock.Object);
 
-        var result = await controller.GetOrdersByCustomerId(Guid.NewGuid());
+        var result = await controller.GetOrdersByCustomerId(Guid.NewGuid(), Helpers.GetCancellationToken());
 
         Assert.IsType<NotFoundResult>(result.Result);
     }
@@ -32,7 +32,7 @@ public class OrderControllerTests
         var orderServiceMock = new Mock<IOrderService>();
 
         orderServiceMock
-            .Setup(e => e.GetCustomerOrders(It.IsAny<Guid>()))
+            .Setup(e => e.GetCustomerOrders(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new SingleResponse<CustomerOrderDto>(
                 new CustomerOrderDto(
                     new CustomerDto(Guid.Empty, string.Empty, string.Empty),
@@ -40,7 +40,7 @@ public class OrderControllerTests
 
         var controller = new OrderController(orderServiceMock.Object);
 
-        var result = await controller.GetOrdersByCustomerId(Guid.NewGuid());
+        var result = await controller.GetOrdersByCustomerId(Guid.NewGuid(), Helpers.GetCancellationToken());
 
         Assert.IsType<OkObjectResult>(result.Result);
     }
@@ -52,7 +52,7 @@ public class OrderControllerTests
 
         var controller = new OrderController(orderServiceMock.Object);
 
-        var result = await controller.Add(Guid.Empty, new AddOrderDto(0));
+        var result = await controller.Add(Guid.Empty, new AddOrderDto(0), Helpers.GetCancellationToken());
 
         (result as StatusCodeResult)!.StatusCode.Should().Be(201);
     }

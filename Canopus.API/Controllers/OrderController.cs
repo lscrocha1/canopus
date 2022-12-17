@@ -21,9 +21,10 @@ public class OrderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<SingleResponse<CustomerOrderDto>>> GetOrdersByCustomerId(
-        [FromRoute] Guid customerId)
+        [FromRoute] Guid customerId,
+        CancellationToken token)
     {
-        var result = await _orderService.GetCustomerOrders(customerId);
+        var result = await _orderService.GetCustomerOrders(customerId, token);
 
         if (result.Data is null)
             return NotFound();
@@ -37,9 +38,10 @@ public class OrderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(
         [FromRoute] Guid customerId,
-        [FromBody] AddOrderDto dto)
+        [FromBody] AddOrderDto dto,
+        CancellationToken token)
     {
-        await _orderService.Add(customerId, dto);
+        await _orderService.Add(customerId, dto, token);
 
         return StatusCode(StatusCodes.Status201Created);
     }

@@ -21,14 +21,14 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<MultipleResponse<CustomerDto>>> Get(
+        CancellationToken token,
         [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 20,
         [FromQuery] string search = "")
     {
-        var result = await _customerService.Get(
-            pageIndex,
-            pageSize,
-            search);
+        var result = await _customerService
+            .Get(pageIndex, pageSize, token, search)
+            .ConfigureAwait(false);
 
         if (!result.Data.Items.Any())
             return NoContent();
@@ -41,9 +41,13 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<SingleResponse<CustomerDto>>> Add([FromBody] AddCustomerDto dto)
+    public async Task<ActionResult<SingleResponse<CustomerDto>>> Add(
+        [FromBody] AddCustomerDto dto,
+        CancellationToken token)
     {
-        var result = await _customerService.AddCustomer(dto);
+        var result = await _customerService
+            .AddCustomer(dto, token)
+            .ConfigureAwait(false);
 
         return new ObjectResult(result)
         {
