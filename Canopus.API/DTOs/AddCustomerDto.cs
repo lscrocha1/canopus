@@ -1,20 +1,21 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Canopus.API.DTOs;
 
 [ExcludeFromCodeCoverage]
-public class CustomerDto
+public class AddCustomerDto
 {
-    public CustomerDto(Guid id, string name, string email)
+    public AddCustomerDto(string name, string email)
     {
-        Id = id;
         Name = name;
         Email = email;
     }
 
-    public Guid Id { get; }
-
+    [Required]
     public string Name { get; }
 
+    [Required]
+    [EmailAddress]
     public string Email { get; }
 }

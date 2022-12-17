@@ -35,4 +35,19 @@ public class CustomerController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<SingleResponse<CustomerDto>>> Add([FromBody] AddCustomerDto dto)
+    {
+        var result = await _customerService.AddCustomer(dto);
+
+        return new ObjectResult(result)
+        {
+            StatusCode = StatusCodes.Status201Created
+        };
+    }
 }

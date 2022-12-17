@@ -2,6 +2,7 @@ using Canopus.API.Controllers;
 using Canopus.API.DTOs;
 using Canopus.API.Responses;
 using Canopus.API.Services.Application.Customer;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -45,5 +46,22 @@ public class CustomerControllerTests
         var result = await controller.Get();
 
         Assert.IsType<OkObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddCustomer_Should_Return_201()
+    {
+        var customerServiceMock = new Mock<ICustomerService>();
+
+        customerServiceMock
+            .Setup(e => e.AddCustomer(new AddCustomerDto(string.Empty, string.Empty)))
+            .ReturnsAsync(new CustomerDto(Guid.Empty, string.Empty, string.Empty));
+
+        var controller = new CustomerController(customerServiceMock.Object);
+
+        var result = await controller.Add(new AddCustomerDto(string.Empty, string.Empty));
+
+        result.Should().NotBeNull();
+        (result.Result as ObjectResult)!.StatusCode.Should().Be(201);
     }
 }

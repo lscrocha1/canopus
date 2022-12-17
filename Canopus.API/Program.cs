@@ -16,13 +16,6 @@ services.AddDbContext<CanopusContext>(opts =>
 {
     var connectionString = configuration.GetConnectionString("CanopusDb");
 
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
-
-        return;
-    }
-
     opts.UseSqlServer(connectionString, sqlOpts =>
     {
         sqlOpts.EnableRetryOnFailure(

@@ -3,15 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 namespace Canopus.API.DTOs;
 
 [ExcludeFromCodeCoverage]
-public class OrderDto
+public class AddOrderDto
 {
-    public OrderDto(decimal price, DateTime createdAt)
+    public AddOrderDto(decimal price)
     {
         Price = price;
-        CreatedAt = createdAt;
     }
 
     public decimal Price { get; }
-
-    public DateTime CreatedAt { get; }
 }

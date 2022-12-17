@@ -11,7 +11,7 @@ public class CustomerOrderDto
         Orders = orders;
     }
 
-    public CustomerDto Customer { get; set; }
+    public CustomerDto Customer { get; }
 
-    public IList<OrderDto> Orders { get; set; }
+    public IList<OrderDto> Orders { get; }
 }

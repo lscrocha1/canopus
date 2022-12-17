@@ -5,5 +5,7 @@ namespace Canopus.API.Services.Application.Order;
 
 public interface IOrderService
 {
-    Task<SingleResponse<CustomerOrderDto>> GetCustomerOrder(Guid customerId);
+    Task<SingleResponse<CustomerOrderDto>> GetCustomerOrders(Guid customerId);
+
+    Task Add(Guid customerId, AddOrderDto dto);
 }
