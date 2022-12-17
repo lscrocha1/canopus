@@ -26,25 +26,25 @@ services.AddDbContext<CanopusContext>(opts =>
     opts.UseSqlServer(connectionString, sqlOpts =>
     {
         sqlOpts.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null);
+            5,
+            TimeSpan.FromSeconds(30),
+            null);
     });
 });
 
 services.AddSwaggerGen(opts =>
 {
-    opts.SwaggerDoc("v1", new OpenApiInfo()
+    opts.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "Canopus Challenge - ília"
     });
-    
+
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    
+
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    
-    opts.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+
+    opts.IncludeXmlComments(xmlPath, true);
 });
 
 var app = builder.Build();
@@ -62,4 +62,6 @@ app.MapControllers();
 app.Run();
 
 [ExcludeFromCodeCoverage]
-public partial class Program {}
+public partial class Program
+{
+}

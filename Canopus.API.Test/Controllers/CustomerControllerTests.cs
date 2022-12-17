@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Canopus.API.Controllers;
 using Canopus.API.DTOs;
 using Canopus.API.Responses;
@@ -36,7 +35,7 @@ public class CustomerControllerTests
             .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
             .ReturnsAsync(
                 new MultipleResponse<CustomerDto>(
-                    new MultipleDataResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>()
+                    new MultipleDataResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>
                     {
                         new(Guid.NewGuid(), string.Empty, string.Empty)
                     })));

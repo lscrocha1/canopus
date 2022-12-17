@@ -17,14 +17,14 @@ public class OrderControllerTests
         orderServiceMock
             .Setup(e => e.GetCustomerOrder(It.IsAny<Guid>()))
             .ReturnsAsync(new SingleResponse<CustomerOrderDto>(null));
-        
+
         var controller = new OrderController(orderServiceMock.Object);
 
         var result = await controller.GetCustomerOrders(Guid.NewGuid());
 
         Assert.IsType<NotFoundResult>(result.Result);
     }
-    
+
     [Fact]
     public async Task GetCustomerOrders_Should_Return_200()
     {
@@ -36,7 +36,7 @@ public class OrderControllerTests
                 new CustomerOrderDto(
                     new CustomerDto(Guid.Empty, string.Empty, string.Empty),
                     new List<OrderDto>())));
-        
+
         var controller = new OrderController(orderServiceMock.Object);
 
         var result = await controller.GetCustomerOrders(Guid.NewGuid());

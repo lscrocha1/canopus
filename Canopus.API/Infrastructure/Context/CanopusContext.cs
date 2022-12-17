@@ -8,13 +8,12 @@ public class CanopusContext : DbContext
 {
     public CanopusContext(DbContextOptions<CanopusContext> options) : base(options)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Program).Assembly);
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

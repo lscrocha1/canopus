@@ -21,18 +21,18 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<MultipleResponse<CustomerDto>>> Get(
-        [FromQuery] int pageIndex = 1, 
+        [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 20,
         [FromQuery] string search = "")
     {
         var result = await _customerService.Get(
-            pageIndex, 
-            pageSize, 
+            pageIndex,
+            pageSize,
             search);
-        
+
         if (!result.Data.Items.Any())
             return NoContent();
-        
+
         return Ok(result);
     }
 }
