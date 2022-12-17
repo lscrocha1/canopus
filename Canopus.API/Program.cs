@@ -43,6 +43,8 @@ services.AddSwaggerGen(opts =>
 
 var app = builder.Build();
 
+RunMigrations(app.Services).Wait();
+
 app.UseSwagger();
 
 app.UseSwaggerUI(opts =>
@@ -56,6 +58,15 @@ app.MapControllers();
 app.AddExceptionHandler();
 
 app.Run();
+
+async Task RunMigrations(IServiceProvider serviceProvider)
+{
+    using var scope = serviceProvider.CreateScope();
+
+    var context = scope.ServiceProvider.GetRequiredService<CanopusContext>();
+
+    await context.Database.EnsureCreatedAsync();
+}
 
 [ExcludeFromCodeCoverage]
 public partial class Program

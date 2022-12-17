@@ -13,9 +13,11 @@ public class AddCustomerDto
     }
 
     [Required]
+    [MaxLength(256)]
     public string Name { get; }
 
     [Required]
     [EmailAddress]
+    [MaxLength(256)]
     public string Email { get; }
 }

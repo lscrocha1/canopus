@@ -4,13 +4,13 @@ namespace Canopus.API.Services.Domain.Customer;
 
 public interface ICustomerService
 {
-    Task<(IList<CustomerDto> customers, PaginationDto dto)> Get(
+    Task<(IList<CustomerDto> Customers, PaginationDto PaginationDto)> Get(
         int pageIndex,
         int pageSize,
         CancellationToken token,
         string search = "");
 
-    Task Add(
+    Task<CustomerDto> Add(
         string name, 
         string email,
         CancellationToken token);
