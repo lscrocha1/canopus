@@ -17,8 +17,7 @@ public class CustomerControllerTests
 
         customerServiceMock
             .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
-            .ReturnsAsync(new MultipleResponse<CustomerDto>(
-                new MultipleDataResponse<CustomerDto>(0, 0, 0, Array.Empty<CustomerDto>())));
+            .ReturnsAsync(new MultipleResponse<CustomerDto>(0, 0, 0, Array.Empty<CustomerDto>()));
 
         var controller = new CustomerController(customerServiceMock.Object);
 
@@ -35,11 +34,10 @@ public class CustomerControllerTests
         customerServiceMock
             .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
             .ReturnsAsync(
-                new MultipleResponse<CustomerDto>(
-                    new MultipleDataResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>
-                    {
-                        new(Guid.NewGuid(), string.Empty, string.Empty)
-                    })));
+                new MultipleResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>
+                {
+                    new(Guid.NewGuid(), string.Empty, string.Empty)
+                }));
 
         var controller = new CustomerController(customerServiceMock.Object);
 

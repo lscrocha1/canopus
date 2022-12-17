@@ -7,11 +7,8 @@ public class ErrorResponse
 {
     public ErrorResponse(string message, int code)
     {
-        Message = message;
-        Code = code;
+        Error = new ErrorBodyResponse(message, code);
     }
-
-    public string Message { get; }
-
-    public int Code { get; }
+    
+    public ErrorBodyResponse Error { get; }
 }
