@@ -3,6 +3,7 @@ using System.Reflection;
 using Canopus.API.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Canopus.API.Infrastructure.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ services.AddSwaggerGen(opts =>
     opts.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Canopus Challenge - ília"
+        Title = "Canopus - A code challenge"
     });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -51,6 +52,8 @@ app.UseSwaggerUI(opts =>
 });
 
 app.MapControllers();
+
+app.AddExceptionHandler();
 
 app.Run();
 
