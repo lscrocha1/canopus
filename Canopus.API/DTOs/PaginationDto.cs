@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Canopus.API.DTOs;
 
+[ExcludeFromCodeCoverage]
 public class PaginationDto
 {
     public PaginationDto(int totalItems, int pageIndex, int pageSize)

@@ -1,6 +1,8 @@
+using System.Collections.ObjectModel;
 using Canopus.API.Controllers;
 using Canopus.API.DTOs;
-using Canopus.API.Services.Domain.Customer;
+using Canopus.API.Responses;
+using Canopus.API.Services.Application.Customer;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -15,13 +17,14 @@ public class CustomerControllerTests
 
         customerServiceMock
             .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<CustomerDto>());
+            .ReturnsAsync(new MultipleResponse<CustomerDto>(
+                new MultipleDataResponse<CustomerDto>(0, 0, 0, Array.Empty<CustomerDto>())));
 
         var controller = new CustomerController(customerServiceMock.Object);
 
         var result = await controller.Get();
 
-        Assert.IsType<NoContentResult>(result);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
@@ -31,15 +34,17 @@ public class CustomerControllerTests
 
         customerServiceMock
             .Setup(e => e.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
-            .ReturnsAsync(new List<CustomerDto>()
-            {
-                new(Guid.NewGuid(), "", "")
-            });
+            .ReturnsAsync(
+                new MultipleResponse<CustomerDto>(
+                    new MultipleDataResponse<CustomerDto>(0, 0, 0, new List<CustomerDto>()
+                    {
+                        new(Guid.NewGuid(), string.Empty, string.Empty)
+                    })));
 
         var controller = new CustomerController(customerServiceMock.Object);
 
         var result = await controller.Get();
 
-        Assert.IsType<OkObjectResult>(result);
+        Assert.IsType<OkObjectResult>(result.Result);
     }
 }

@@ -30,7 +30,7 @@ public class CustomerController : ControllerBase
             pageSize, 
             search);
         
-        if (!result.Items.Any())
+        if (!result.Data.Items.Any())
             return NoContent();
         
         return Ok(result);

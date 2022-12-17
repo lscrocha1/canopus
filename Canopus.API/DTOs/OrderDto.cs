@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Canopus.API.DTOs;
 
+[ExcludeFromCodeCoverage]
 public class OrderDto
 {
     public OrderDto(decimal price, DateTime createdAt)
