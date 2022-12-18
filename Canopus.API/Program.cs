@@ -4,6 +4,8 @@ using Canopus.API.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Canopus.API.Infrastructure.Exceptions;
+using Canopus.API.Services.Application.Customer;
+using Canopus.API.Services.Application.Order;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,14 @@ services.AddDbContext<CanopusContext>(opts =>
             null);
     });
 });
+
+services.AddScoped<IOrderService, OrderService>();
+services.AddScoped<Canopus.API.Services.Domain.Order.IOrderService, Canopus.API.Services.Domain.Order.OrderService>();
+
+services.AddScoped<ICustomerService, CustomerService>();
+services
+    .AddScoped<Canopus.API.Services.Domain.Customer.ICustomerService,
+        Canopus.API.Services.Domain.Customer.CustomerService>();
 
 services.AddSwaggerGen(opts =>
 {

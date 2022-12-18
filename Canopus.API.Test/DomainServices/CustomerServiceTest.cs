@@ -1,4 +1,5 @@
 using Canopus.API.Domain;
+using Canopus.API.DTOs;
 using Canopus.API.Infrastructure.Context;
 using Canopus.API.Infrastructure.Exceptions;
 using Canopus.API.Services.Domain.Customer;
@@ -116,8 +117,7 @@ public class CustomerServiceTest
         
         await Assert.ThrowsAsync<UnprocessableEntityException>(async () => 
             await customerService.Add(
-            name: Guid.NewGuid().ToString(), 
-            customerEmail, 
+            new AddCustomerDto(name: Guid.NewGuid().ToString(), customerEmail),
             Helpers.GetCancellationToken()));
     }
 
@@ -132,7 +132,9 @@ public class CustomerServiceTest
 
         var customerEmail = Guid.NewGuid().ToString();
 
-        var result = await customerService.Add(customerName, customerEmail, Helpers.GetCancellationToken());
+        var result = await customerService.Add(
+            new AddCustomerDto(customerName, customerEmail), 
+            Helpers.GetCancellationToken());
 
         result.Email.Should().Be(customerEmail);
         result.Name.Should().Be(customerName);

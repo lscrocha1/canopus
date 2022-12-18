@@ -11,7 +11,6 @@ public class AddOrderDto
         Price = price;
     }
 
-    [MinLength(1)]
     [Required]
     public decimal Price { get; }
 }

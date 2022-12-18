@@ -53,7 +53,7 @@ public class CustomerControllerTests
 
         customerServiceMock
             .Setup(e => e.AddCustomer(new AddCustomerDto(string.Empty, string.Empty), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new CustomerDto(Guid.Empty, string.Empty, string.Empty));
+            .ReturnsAsync(new SingleResponse<CustomerDto>(new CustomerDto(Guid.Empty, string.Empty, string.Empty)));
 
         var controller = new CustomerController(customerServiceMock.Object);
 

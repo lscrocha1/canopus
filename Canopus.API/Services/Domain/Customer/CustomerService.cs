@@ -18,7 +18,7 @@ public class CustomerService : ICustomerService
         int pageIndex,
         int pageSize,
         CancellationToken token,
-        string search = "")
+        string? search = "")
     {
         if (pageIndex < 1)
             throw new BadRequestException("Page index cannot be lower than 1.");
@@ -51,17 +51,17 @@ public class CustomerService : ICustomerService
         return (customers, new PaginationDto(totalItems, pageIndex, pageSize));
     }
 
-    public async Task<CustomerDto> Add(string name, string email, CancellationToken token)
+    public async Task<CustomerDto> Add(AddCustomerDto dto, CancellationToken token)
     {
-        var emailAlreadyInUse = await CheckEmailAlreadyInUse(email);
+        var emailAlreadyInUse = await CheckEmailAlreadyInUse(dto.Email);
 
         if (emailAlreadyInUse)
             throw new UnprocessableEntityException("Email already in use.");
 
         var customer = new API.Domain.Customer
         {
-            Name = name,
-            Email = email
+            Name = dto.Name,
+            Email = dto.Email
         };
         
         await _context.AddAsync(customer, token).ConfigureAwait(false);

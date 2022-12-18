@@ -27,7 +27,10 @@ public static class ExceptionHandler
                     code = canopusException.Code;
                 }
 
-                await context.Response.WriteAsJsonAsync(new ErrorResponse(message, code));
+                await context.Response.WriteAsJsonAsync(new ObjectResult(new ErrorResponse(message, code))
+                {
+                    StatusCode = code
+                });
             });
         });
     }

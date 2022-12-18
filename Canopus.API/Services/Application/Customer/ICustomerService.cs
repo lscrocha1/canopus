@@ -9,7 +9,7 @@ public interface ICustomerService
         int pageIndex, 
         int pageSize, 
         CancellationToken token,
-        string search = "");
+        string? search = "");
 
-    Task<CustomerDto> AddCustomer(AddCustomerDto dto, CancellationToken token);
+    Task<SingleResponse<CustomerDto>> AddCustomer(AddCustomerDto dto, CancellationToken token);
 }

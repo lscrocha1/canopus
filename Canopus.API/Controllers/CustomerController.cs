@@ -24,7 +24,7 @@ public class CustomerController : ControllerBase
         CancellationToken token,
         [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 20,
-        [FromQuery] string search = "")
+        [FromQuery] string? search = "")
     {
         var result = await _customerService
             .Get(pageIndex, pageSize, token, search)

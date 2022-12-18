@@ -8,10 +8,7 @@ public interface ICustomerService
         int pageIndex,
         int pageSize,
         CancellationToken token,
-        string search = "");
+        string? search = "");
 
-    Task<CustomerDto> Add(
-        string name, 
-        string email,
-        CancellationToken token);
+    Task<CustomerDto> Add(AddCustomerDto dto, CancellationToken token);
 }
