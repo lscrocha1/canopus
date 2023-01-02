@@ -1,4 +1,3 @@
-Canopus - challenge for ília. 
 Built and tested using macOS m1 13.0.1
 
 # How to run
